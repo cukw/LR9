@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Library.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="Library.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Width="660" Height="420"
+        Title="Телефонный справочник">
+
+  <Grid Margin="12"
+        RowDefinitions="Auto,12,*,12,Auto"
+        ColumnDefinitions="*,140">
+
+    <!-- Верхний блок -->
+    <HeaderedContentControl Header="Коррекция"
+                            Classes="GroupBox"
+                            Grid.Row="0" Grid.Column="0">
+      <Grid Margin="10"
+            ColumnDefinitions="Auto,12,*"
+            RowDefinitions="Auto,10,Auto">
+
+        <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Text="Имя:"/>
+        <TextBox Grid.Row="0" Grid.Column="2"
+                 MinWidth="220"
+                 Text="{Binding Name, Mode=TwoWay}" />
+
+        <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Text="Телефон:"/>
+        <TextBox Grid.Row="2" Grid.Column="2"
+                 MinWidth="220"
+                 Text="{Binding Phone, Mode=TwoWay}" />
+      </Grid>
+    </HeaderedContentControl>
+
+    <!-- Кнопки справа -->
+    <StackPanel Grid.Row="0" Grid.Column="1"
+                Spacing="10"
+                HorizontalAlignment="Right">
+      <Button Width="110"
+              Content="Добавить"
+              Command="{Binding AddCommand}"/>
+      <Button Width="110"
+              Content="Удалить"
+              Command="{Binding DeleteCommand}"/>
+      <Button Width="110"
+              Content="Найти"
+              Command="{Binding FindCommand}"/>
+    </StackPanel>
+
+    <!-- Список -->
+    <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                Spacing="6">
+      <TextBlock Text="Список:"/>
+      <ListBox Height="220"
+               ItemsSource="{Binding Items}"
+               SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <TextBlock Text="{Binding Display}"/>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+
+    <!-- Низ -->
+    <TextBlock Grid.Row="4" Grid.Column="0"
+               Text="{Binding TotalText}"/>
+  </Grid>
+</Window>
